@@ -1,0 +1,90 @@
+name: CI — Flutter Mobile
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'apps/mobile/**'
+      - '.github/workflows/ci-mobile.yml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'apps/mobile/**'
+
+defaults:
+  run:
+    working-directory: apps/mobile
+
+jobs:
+  analyze-and-test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.x'
+          channel: stable
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Run analyzer
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run unit tests
+        run: flutter test --coverage
+        env:
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder-anon-key
+          ENVIRONMENT: test
+
+  build-apk:
+    name: Build APK (Staging)
+    runs-on: ubuntu-latest
+    needs: analyze-and-test
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.x'
+          channel: stable
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Create env file
+        run: |
+          cat > .env.staging << EOF
+          SUPABASE_URL=${{ secrets.STAGING_SUPABASE_URL }}
+          SUPABASE_ANON_KEY=${{ secrets.STAGING_SUPABASE_ANON_KEY }}
+          ENVIRONMENT=staging
+          APP_VERSION=1.0.0
+          SUPPORT_EMAIL=support@sunrcircle.in
+          EOF
+
+      - name: Build staging APK
+        run: |
+          flutter build apk --release \
+            --dart-define-from-file=.env.staging \
+            --build-name=1.0.0 \
+            --build-number=${{ github.run_number }}
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-apk-${{ github.run_number }}
+          path: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14

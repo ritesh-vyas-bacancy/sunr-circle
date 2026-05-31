@@ -1,0 +1,24 @@
+# CODEOWNERS — every PR touching these paths requires review from the listed team/user.
+# Teams must be created in the GitHub organisation settings before these rules take effect.
+
+# Global fallback
+*                              @sunr-circle/lead-engineers
+
+# Admin panel
+/apps/admin/                   @sunr-circle/frontend-team
+
+# Flutter mobile
+/apps/mobile/                  @sunr-circle/mobile-team
+
+# Supabase (schema changes need DBA review)
+/supabase/migrations/          @sunr-circle/backend-team @sunr-circle/dba
+/supabase/functions/           @sunr-circle/backend-team
+/supabase/                     @sunr-circle/backend-team
+
+# CI/CD — DevOps must review workflow changes
+/.github/workflows/            @sunr-circle/devops
+
+# Documentation
+/docs/                         @sunr-circle/lead-engineers
+/README.md                     @sunr-circle/lead-engineers
+/PHASE1_ARCHITECTURE.md        @sunr-circle/lead-engineers

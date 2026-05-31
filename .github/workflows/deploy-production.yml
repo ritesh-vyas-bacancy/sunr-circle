@@ -1,0 +1,57 @@
+name: Deploy — Production
+
+on:
+  push:
+    branches: [main]
+
+# Require manual approval via GitHub environment protection rules
+jobs:
+  deploy-admin-production:
+    name: Deploy Admin Panel to Production (Vercel)
+    runs-on: ubuntu-latest
+    environment: production   # Protected environment — requires 2 reviewer approvals
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel (Production)
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: apps/admin
+          alias-domains: admin.sunrcircle.in
+
+  deploy-supabase-production:
+    name: Deploy Supabase Migrations (Production)
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy migrations to production
+        run: |
+          supabase link --project-ref ${{ secrets.PROD_SUPABASE_PROJECT_REF }}
+          supabase db push --project-ref ${{ secrets.PROD_SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Deploy Edge Functions to production
+        run: |
+          supabase functions deploy complaint-number-validator --project-ref ${{ secrets.PROD_SUPABASE_PROJECT_REF }}
+          supabase functions deploy notification-dispatcher --project-ref ${{ secrets.PROD_SUPABASE_PROJECT_REF }}
+          supabase functions deploy report-generator --project-ref ${{ secrets.PROD_SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Notify on success
+        if: success()
+        run: echo "Production deployment successful at $(date -u)"

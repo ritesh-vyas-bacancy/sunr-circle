@@ -1,0 +1,127 @@
+common:
+  loading: "લોડ થઈ રહ્યું છે..."
+  error: ભૂલ
+  retry: ફરી પ્રયાસ
+  cancel: રદ કરો
+  save: સાચવો
+  submit: સ્વીકારો
+  back: પાછળ
+  search: શોધ
+  no_data: કોઈ ડેટા નથી
+  offline: ઇન્ટરનેટ કનેક્શન નથી
+  yes: હા
+  no: ના
+  close: બંધ
+  success: સફળ
+  failed: નિષ્ફળ
+
+auth:
+  login:
+    title: "સાઇન ઇન"
+    email: "ઇ-મેઇલ સરનામું"
+    password: "પાસવર્ડ"
+    sign_in: "સાઇન ઇન"
+    forgot_password: "પાસવર્ડ ભૂલ્યા?"
+    error_invalid: "ઇ-મેઇલ અથવા પાસવર્ડ ખોટો છે. ફરી પ્રયાસ કરો."
+    error_generic: "લૉગિન નિષ્ફળ. ફરી પ્રયાસ કરો."
+  forgot_password:
+    title: "પાસવર્ડ ભૂલ્યા"
+    description: "તમારું નોંધાયેલ ઇ-મેઇલ સરનામું દાખલ કરો."
+    email: "ઇ-મેઇલ"
+    submit: "રીસેટ લિંક મોકલો"
+    success_message: "જો આ ઇ-મેઇલ નોંધાયેલ છે, ટૂંક સમયમાં રીસેટ લિંક મળશે."
+    back_to_login: "સાઇન ઇન પર પાછળ"
+
+nav:
+  dashboard: "ડેશબોર્ડ"
+  complaints: "ફરિયાદો"
+  history: "ઇતિહાસ"
+  search: "શોધ"
+  settings: "સેટિંગ"
+  profile: "પ્રોફાઇલ"
+  logout: "સાઇન આઉટ"
+  open_complaints: "ખુલ્લી ફરિયાદો"
+  assigned_complaints: "સોંપેલ"
+  reports: "અહેવાલ"
+  statistics: "આંકડા"
+
+complaint:
+  status:
+    open: "ખુલ્લી"
+    assigned: "સોંપેલ"
+    in_progress: "પ્રક્રિયામાં"
+    closed: "બંધ"
+    rejected: "નામંજૂર"
+  fields:
+    number: "ફરિયાદ ક્રમાંક"
+    consumer_name: "ગ્રાહકનું નામ"
+    consumer_mobile: "ગ્રાહક મોબાઇલ"
+    nature: "ફરિયાદનો પ્રકાર"
+    remarks: "ટિપ્પણી"
+    circle: "સર્કલ"
+    division: "ડિવિઝન"
+    sub_division: "સબ ડિવિઝન"
+    created_by: "બનાવ્યું"
+    assigned_to: "સોંપ્યું"
+    attend_remarks: "હાજર ટિપ્પણી"
+    created_at: "બનાવ્યું"
+    assigned_at: "સોંપ્યું"
+    closed_at: "બંધ"
+  actions:
+    create: "ફરિયાદ બનાવો"
+    accept: "ફરિયાદ સ્વીકારો"
+    start_work: "કામ શરૂ કરો"
+    close_complaint: "ફરિયાદ બંધ કરો"
+    reject: "નામંજૂર"
+    assign: "સોંપો"
+    update_status: "સ્થિતિ અપડેટ"
+    add_remarks: "ટિપ્પણી ઉમેરો"
+  create:
+    title: "નવી ફરિયાદ"
+    success: "ફરિયાદ સફળતાપૂર્વક બની"
+    number_available: "✓ ઉપલબ્ધ"
+    number_taken: "✗ પહેલેથી ઉપલબ્ધ"
+    checking: "ચકાસી રહ્યા..."
+    number_hint: "દા.ત. FC12345"
+    number_generated: "સિસ્ટમ ઉત્પન્ન કરશે: SUNR-XXXXXX-FC12345"
+  messages:
+    no_open: "કોઈ ખુલ્લી ફરિયાદ નથી"
+    no_assigned: "કોઈ સોંપેલ ફરિયાદ નથી"
+    no_history: "કોઈ ઇતિહાસ નથી"
+
+call_centre:
+  dashboard:
+    title: "ડેશબોર્ડ"
+    create_new: "નવી ફરિયાદ"
+
+line_man:
+  dashboard:
+    title: "મારો ડેશબોર્ડ"
+
+top_management:
+  dashboard:
+    title: "ઝાંખી"
+    total: "કુલ ફરિયાદો"
+    open: "ખુલ્લી"
+    in_progress: "પ્રક્રિયામાં"
+    closed_today: "આજે બંધ"
+
+settings:
+  language:
+    title: "ભાષા"
+    english: "English"
+    gujarati: "ગુજરાતી"
+    change_success: "ભાષા બદલાઈ"
+  profile:
+    title: "પ્રોફાઇલ"
+    employee_id: "કર્મચારી ID"
+    mobile: "મોબાઇલ"
+    role: "ભૂમિકા"
+    organisation: "સંસ્થા"
+    sub_division: "સબ ડિવિઝન"
+
+errors:
+  network: "ઇન્ટરનેટ કનેક્શન નથી."
+  session_expired: "સત્ર સમાપ્ત. ફરી સાઇન ઇન કરો."
+  server: "સર્વર ભૂલ. ફરી પ્રયાસ."
+  permission: "આ ક્રિયા માટે પરવાનગી નથી."

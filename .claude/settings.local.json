@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin\" && echo \"Directory created\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/supabase/migrations\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/supabase/seed\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/supabase/functions/complaint-number-validator\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/supabase/functions/notification-dispatcher\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/supabase/functions/report-generator\")",
+      "Bash(xargs ls -la)",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/app\" \"d:/claude-code-projects/sunr-circle/apps/admin/src/components/ui\" \"d:/claude-code-projects/sunr-circle/apps/admin/src/hooks\" \"d:/claude-code-projects/sunr-circle/apps/admin/src/lib\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/types\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/lib/supabase\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/lib/auth\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/app/api/auth/[...nextauth]\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/auth/schemas\" \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/auth/actions\" \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/auth/components\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/app/\\(auth\\)/login\" \"d:/claude-code-projects/sunr-circle/apps/admin/src/app/\\(auth\\)/forgot-password\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/app/\\(dashboard\\)/dashboard\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/components/shared\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/hooks\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/users/schemas\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/users/queries\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/users/actions\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/features/users/components\")",
+      "Bash(mkdir -p \"d:/claude-code-projects/sunr-circle/apps/admin/src/app/\\(dashboard\\)/users/new\")",
+      "Bash(mkdir -p \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\src\\\\app\\\\\\(dashboard\\)\\\\offices\\\\circles\\\\new\")",
+      "Bash(mkdir -p \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\src\\\\app\\\\\\(dashboard\\)\\\\offices\\\\circles\\\\[id]\\\\edit\")",
+      "Bash(mkdir -p \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\src\\\\app\\\\\\(dashboard\\)\\\\offices\\\\divisions\\\\new\")",
+      "Bash(mkdir -p \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\src\\\\app\\\\\\(dashboard\\)\\\\offices\\\\divisions\\\\[id]\\\\edit\")",
+      "Bash(mkdir -p \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\src\\\\app\\\\\\(dashboard\\)\\\\offices\\\\sub-divisions\\\\new\")",
+      "Bash(npx tsc *)",
+      "Bash(Read \"C:\\\\Users\\\\Bacancy\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--claude-code-projects-sunr-circle\\\\12287e42-0f44-4b17-901f-842cc9f8ede1\\\\tasks\\\\btmfkkrfb.output\")",
+      "PowerShell($tsc = \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\node_modules\\\\typescript\\\\bin\\\\tsc\"; Set-Location \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\"; node $tsc --noEmit 2>&1 | Where-Object { $_ -match \"features/users|app/\\\\\\(dashboard\\\\\\)/users\" } | Select-Object -First 40)",
+      "PowerShell(Get-ChildItem \"d:\\\\claude-code-projects\\\\sunr-circle\\\\apps\\\\admin\\\\node_modules\\\\@supabase\\\\postgrest-js\" -Recurse | Where-Object { $_.Extension -eq \".ts\" -or $_.Extension -eq \".d.ts\" } | Select-Object -First 10 FullName)",
+      "Bash(node -e ' *)",
+      "Bash(supabase --version)"
+    ],
+    "additionalDirectories": [
+      "d:\\claude-code-projects\\sunr-circle\\apps",
+      "d:\\claude-code-projects\\sunr-circle\\apps\\admin\\src"
+    ]
+  }
+}

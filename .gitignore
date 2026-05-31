@@ -1,0 +1,64 @@
+# ============================================================
+# SUNR Circle — Root .gitignore
+# ============================================================
+
+# Environment files — NEVER commit these
+*.env
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# Node
+node_modules/
+.npm/
+
+# Next.js
+apps/admin/.next/
+apps/admin/out/
+apps/admin/*.tsbuildinfo
+apps/admin/next-env.d.ts
+apps/admin/.vercel/
+apps/admin/coverage/
+
+# Flutter / Dart
+apps/mobile/.dart_tool/
+apps/mobile/.flutter-plugins
+apps/mobile/.flutter-plugins-dependencies
+apps/mobile/.packages
+apps/mobile/build/
+apps/mobile/.pub-cache/
+apps/mobile/android/key.properties
+apps/mobile/android/app/sunrcircle-release.jks
+apps/mobile/*.aab
+apps/mobile/*.apk
+
+# IDE
+.idea/
+.vscode/settings.json
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V*
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Debug symbols (Flutter obfuscation)
+apps/mobile/build/debug-info/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

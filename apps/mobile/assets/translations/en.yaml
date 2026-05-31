@@ -1,0 +1,127 @@
+common:
+  loading: Loading...
+  error: An error occurred
+  retry: Retry
+  cancel: Cancel
+  save: Save
+  submit: Submit
+  back: Back
+  search: Search
+  no_data: No records found
+  offline: No internet connection
+  yes: Yes
+  no: No
+  close: Close
+  success: Success
+  failed: Failed
+
+auth:
+  login:
+    title: Sign In
+    email: Email Address
+    password: Password
+    sign_in: Sign In
+    forgot_password: Forgot Password?
+    error_invalid: Invalid email or password. Please try again.
+    error_generic: Login failed. Please try again.
+  forgot_password:
+    title: Forgot Password
+    description: Enter your registered email address. We will send a password reset link.
+    email: Email Address
+    submit: Send Reset Link
+    success_message: If this email is registered, you will receive a reset link shortly.
+    back_to_login: Back to Sign In
+
+nav:
+  dashboard: Dashboard
+  complaints: Complaints
+  history: History
+  search: Search
+  settings: Settings
+  profile: Profile
+  logout: Sign Out
+  open_complaints: Open Complaints
+  assigned_complaints: Assigned
+  reports: Reports
+  statistics: Statistics
+
+complaint:
+  status:
+    open: Open
+    assigned: Assigned
+    in_progress: In Progress
+    closed: Closed
+    rejected: Rejected
+  fields:
+    number: Complaint Number
+    consumer_name: Consumer Name
+    consumer_mobile: Consumer Mobile
+    nature: Nature of Complaint
+    remarks: Remarks
+    circle: Circle
+    division: Division
+    sub_division: Sub Division
+    created_by: Created By
+    assigned_to: Assigned To
+    attend_remarks: Attend Remarks
+    created_at: Created On
+    assigned_at: Assigned On
+    closed_at: Closed On
+  actions:
+    create: Create Complaint
+    accept: Accept Complaint
+    start_work: Start Work
+    close_complaint: Close Complaint
+    reject: Reject
+    assign: Assign
+    update_status: Update Status
+    add_remarks: Add Remarks
+  create:
+    title: New Complaint
+    success: Complaint created successfully
+    number_available: "✓ Available"
+    number_taken: "✗ Already taken"
+    checking: Checking...
+    number_hint: "e.g. FC12345"
+    number_generated: "System generates: SUNR-XXXXXX-FC12345"
+  messages:
+    no_open: No open complaints at this time
+    no_assigned: No assigned complaints
+    no_history: No complaint history
+
+call_centre:
+  dashboard:
+    title: Dashboard
+    create_new: Create New Complaint
+
+line_man:
+  dashboard:
+    title: My Dashboard
+
+top_management:
+  dashboard:
+    title: Overview
+    total: Total Complaints
+    open: Open
+    in_progress: In Progress
+    closed_today: Closed Today
+
+settings:
+  language:
+    title: Language
+    english: English
+    gujarati: "ગુજરાતી (Gujarati)"
+    change_success: Language changed successfully
+  profile:
+    title: Profile
+    employee_id: Employee ID
+    mobile: Mobile Number
+    role: Role
+    organisation: Organisation
+    sub_division: Sub Division
+
+errors:
+  network: No internet connection. Please check your network.
+  session_expired: Your session has expired. Please sign in again.
+  server: Server error. Please try again later.
+  permission: You do not have permission to perform this action.

@@ -1,0 +1,51 @@
+name: Deploy — Staging
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy-admin-staging:
+    name: Deploy Admin Panel to Staging (Vercel)
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel (Staging)
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: apps/admin
+          alias-domains: admin-staging.sunrcircle.in
+
+  deploy-supabase-staging:
+    name: Deploy Supabase Migrations (Staging)
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy migrations to staging
+        run: |
+          supabase link --project-ref ${{ secrets.STAGING_SUPABASE_PROJECT_REF }}
+          supabase db push --project-ref ${{ secrets.STAGING_SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Deploy Edge Functions to staging
+        run: |
+          supabase functions deploy complaint-number-validator --project-ref ${{ secrets.STAGING_SUPABASE_PROJECT_REF }}
+          supabase functions deploy notification-dispatcher --project-ref ${{ secrets.STAGING_SUPABASE_PROJECT_REF }}
+          supabase functions deploy report-generator --project-ref ${{ secrets.STAGING_SUPABASE_PROJECT_REF }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

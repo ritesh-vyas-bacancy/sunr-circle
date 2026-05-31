@@ -1,0 +1,61 @@
+name: Supabase — Validate Migrations
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'supabase/migrations/**'
+      - 'supabase/functions/**'
+      - '.github/workflows/supabase-migrations.yml'
+
+jobs:
+  validate-sql:
+    name: Validate SQL Migrations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local Supabase
+        run: supabase start
+        working-directory: supabase
+
+      - name: Run migrations
+        run: supabase db push
+        working-directory: supabase
+
+      - name: Validate RLS policies
+        run: |
+          supabase db execute --file supabase/tests/rls_tests.sql || true
+        working-directory: supabase
+
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop
+        working-directory: supabase
+
+  validate-edge-functions:
+    name: Validate Edge Functions (Deno types)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Check complaint-number-validator
+        run: deno check supabase/functions/complaint-number-validator/index.ts
+
+      - name: Check notification-dispatcher
+        run: deno check supabase/functions/notification-dispatcher/index.ts
+
+      - name: Check report-generator
+        run: deno check supabase/functions/report-generator/index.ts

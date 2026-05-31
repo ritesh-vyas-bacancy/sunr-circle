@@ -1,0 +1,64 @@
+name: sunr_circle_mobile
+description: SUNR Circle Complaint Management System - Mobile Application
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # Navigation
+  go_router: ^14.2.0
+
+  # HTTP Client
+  dio: ^5.4.3+1
+
+  # Supabase
+  supabase_flutter: ^2.5.6
+
+  # Localisation
+  easy_localization: ^3.0.7
+
+  # Secure Storage
+  flutter_secure_storage: ^9.2.2
+
+  # UI Utilities
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+  intl: ^0.19.0
+
+  # Utilities
+  connectivity_plus: ^6.0.3
+  package_info_plus: ^8.0.2
+  path_provider: ^2.1.3
+
+  # Reporting / Charts (Phase 5)
+  # Syncfusion Flutter Charts — requires license for commercial use.
+  # Community license is free for revenue < $1M USD.
+  # Add license key in main.dart: SyncfusionLicense.registerLicense('YOUR_KEY')
+  syncfusion_flutter_charts: ^26.2.14
+  syncfusion_flutter_pdf: ^26.2.14
+
+  # Firebase (for push notifications - Phase 6)
+  # firebase_core: ^3.6.0
+  # firebase_messaging: ^15.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/translations/
+    - assets/images/
