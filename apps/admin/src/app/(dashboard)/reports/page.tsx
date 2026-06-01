@@ -43,6 +43,7 @@ export default async function ReportsPage() {
         divisions={divisionsList as any}
         subDivisions={subDivisionsList as any}
         lineMen={(lineMen ?? []) as any}
+        orgId={orgId}
       />
     </div>
   )

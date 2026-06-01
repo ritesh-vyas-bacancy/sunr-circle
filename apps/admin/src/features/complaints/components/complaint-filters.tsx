@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import { useUrlParams } from '@/hooks/use-url-params'
@@ -141,7 +141,7 @@ export function ComplaintFilters({
             <SelectValue placeholder="All Circles" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Circles</SelectItem>
+            <SelectItem value="all">All Circles</SelectItem>
             {circles.map((c) => (
               <SelectItem key={c.id} value={c.id}>
                 {c.name}
@@ -156,7 +156,7 @@ export function ComplaintFilters({
             <SelectValue placeholder="All Divisions" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Divisions</SelectItem>
+            <SelectItem value="all">All Divisions</SelectItem>
             {filteredDivisions.map((d) => (
               <SelectItem key={d.id} value={d.id}>
                 {d.name}
@@ -174,7 +174,7 @@ export function ComplaintFilters({
             <SelectValue placeholder="All Sub Divisions" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Sub Divisions</SelectItem>
+            <SelectItem value="all">All Sub Divisions</SelectItem>
             {filteredSubDivisions.map((s) => (
               <SelectItem key={s.id} value={s.id}>
                 {s.name}
@@ -209,7 +209,7 @@ export function ComplaintFilters({
             <SelectValue placeholder="All Line Men" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Line Men</SelectItem>
+            <SelectItem value="all">All Line Men</SelectItem>
             {lineMen.map((lm) => (
               <SelectItem key={lm.id} value={lm.id}>
                 {lm.full_name}

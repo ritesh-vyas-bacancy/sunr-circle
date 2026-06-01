@@ -51,8 +51,9 @@ const REPORT_TYPES = [
   { value: 'custom', label: 'Custom Date Range' },
 ]
 
+// Use 'all' sentinel instead of '' — Radix UI Select forbids empty string values
 const STATUS_OPTIONS = [
-  { value: '', label: 'All Statuses' },
+  { value: 'all', label: 'All Statuses' },
   { value: 'open', label: 'Open' },
   { value: 'assigned', label: 'Assigned' },
   { value: 'in_progress', label: 'In Progress' },
@@ -103,21 +104,22 @@ export function ReportBuilder({
     useState<ReportFilters['reportType']>('monthly')
   const [dateFrom, setDateFrom] = useState(getDefaultDates('monthly').from)
   const [dateTo, setDateTo] = useState(getDefaultDates('monthly').to)
-  const [circleId, setCircleId] = useState('')
-  const [divisionId, setDivisionId] = useState('')
-  const [subDivisionId, setSubDivisionId] = useState('')
-  const [status, setStatus] = useState('')
-  const [assignedTo, setAssignedTo] = useState('')
+  // Use 'all' sentinel — Radix UI Select forbids empty string values
+  const [circleId, setCircleId] = useState('all')
+  const [divisionId, setDivisionId] = useState('all')
+  const [subDivisionId, setSubDivisionId] = useState('all')
+  const [status, setStatus] = useState('all')
+  const [assignedTo, setAssignedTo] = useState('all')
 
   const [reportData, setReportData] = useState<ReportData | null>(null)
   const [isGenerating, startGenerating] = useTransition()
   const [isExporting, setIsExporting] = useState<'excel' | 'pdf' | null>(null)
 
   const filteredDivisions = divisions.filter(
-    (d) => !circleId || d.parent_id === circleId,
+    (d) => circleId === 'all' || d.parent_id === circleId,
   )
   const filteredSubDivisions = subDivisions.filter(
-    (s) => !divisionId || s.parent_id === divisionId,
+    (s) => divisionId === 'all' || s.parent_id === divisionId,
   )
 
   function onReportTypeChange(val: string) {
@@ -132,27 +134,28 @@ export function ReportBuilder({
 
   function onCircleChange(val: string) {
     setCircleId(val)
-    setDivisionId('')
-    setSubDivisionId('')
+    setDivisionId('all')
+    setSubDivisionId('all')
   }
 
   function onDivisionChange(val: string) {
     setDivisionId(val)
-    setSubDivisionId('')
+    setSubDivisionId('all')
   }
 
   function handleGenerate() {
     startGenerating(async () => {
       try {
+        // Convert 'all' sentinel back to undefined for the API
         const filters: ReportFilters = {
           reportType,
           dateFrom,
           dateTo,
-          circleId: circleId || undefined,
-          divisionId: divisionId || undefined,
-          subDivisionId: subDivisionId || undefined,
-          status: status ? (status as any) : undefined,
-          assignedTo: assignedTo || undefined,
+          circleId: circleId !== 'all' ? circleId : undefined,
+          divisionId: divisionId !== 'all' ? divisionId : undefined,
+          subDivisionId: subDivisionId !== 'all' ? subDivisionId : undefined,
+          status: status !== 'all' ? (status as any) : undefined,
+          assignedTo: assignedTo !== 'all' ? assignedTo : undefined,
         }
         // Call Route Handler instead of Server Action to avoid
         // 'use server' → next/headers bundling issue in Next.js 16
@@ -253,7 +256,7 @@ export function ReportBuilder({
                   <SelectValue placeholder="All Circles" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Circles</SelectItem>
+                  <SelectItem value="all">All Circles</SelectItem>
                   {circles.map((c) => (
                     <SelectItem key={c.id} value={c.id}>
                       {c.name}
@@ -273,7 +276,7 @@ export function ReportBuilder({
                   <SelectValue placeholder="All Divisions" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Divisions</SelectItem>
+                  <SelectItem value="all">All Divisions</SelectItem>
                   {filteredDivisions.map((d) => (
                     <SelectItem key={d.id} value={d.id}>
                       {d.name}
@@ -293,7 +296,7 @@ export function ReportBuilder({
                   <SelectValue placeholder="All Sub Divisions" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Sub Divisions</SelectItem>
+                  <SelectItem value="all">All Sub Divisions</SelectItem>
                   {filteredSubDivisions.map((s) => (
                     <SelectItem key={s.id} value={s.id}>
                       {s.name}
