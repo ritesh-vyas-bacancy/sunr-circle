@@ -29,8 +29,9 @@ interface ComplaintFiltersProps {
   }
 }
 
+// Use 'all' sentinel — Radix UI SelectItem forbids empty string values
 const STATUS_OPTIONS: Array<{ value: string; label: string }> = [
-  { value: '', label: 'All Statuses' },
+  { value: 'all', label: 'All Statuses' },
   { value: 'open', label: 'Open' },
   { value: 'assigned', label: 'Assigned' },
   { value: 'in_progress', label: 'In Progress' },
@@ -136,7 +137,7 @@ export function ComplaintFilters({
       {/* Row 2: Cascading selects + date range */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
         {/* Circle */}
-        <Select value={currentFilters.circleId ?? ''} onValueChange={handleCircleChange}>
+        <Select value={currentFilters.circleId || 'all'} onValueChange={(v) => handleCircleChange(v === 'all' ? '' : v)}>
           <SelectTrigger>
             <SelectValue placeholder="All Circles" />
           </SelectTrigger>
@@ -151,7 +152,7 @@ export function ComplaintFilters({
         </Select>
 
         {/* Division */}
-        <Select value={currentFilters.divisionId ?? ''} onValueChange={handleDivisionChange}>
+        <Select value={currentFilters.divisionId || 'all'} onValueChange={(v) => handleDivisionChange(v === 'all' ? '' : v)}>
           <SelectTrigger>
             <SelectValue placeholder="All Divisions" />
           </SelectTrigger>
@@ -167,8 +168,8 @@ export function ComplaintFilters({
 
         {/* Sub Division */}
         <Select
-          value={currentFilters.subDivisionId ?? ''}
-          onValueChange={(v) => handleFilterChange('subDivisionId', v)}
+          value={currentFilters.subDivisionId || 'all'}
+          onValueChange={(v) => handleFilterChange('subDivisionId', v === 'all' ? '' : v)}
         >
           <SelectTrigger>
             <SelectValue placeholder="All Sub Divisions" />
@@ -185,15 +186,15 @@ export function ComplaintFilters({
 
         {/* Status */}
         <Select
-          value={currentFilters.status ?? ''}
-          onValueChange={(v) => handleFilterChange('status', v)}
+          value={currentFilters.status ?? 'all'}
+          onValueChange={(v) => handleFilterChange('status', v === 'all' ? '' : v)}
         >
           <SelectTrigger>
             <SelectValue placeholder="All Statuses" />
           </SelectTrigger>
           <SelectContent>
             {STATUS_OPTIONS.map((opt) => (
-              <SelectItem key={opt.value || '__all__'} value={opt.value}>
+              <SelectItem key={opt.value} value={opt.value}>
                 {opt.label}
               </SelectItem>
             ))}
@@ -202,8 +203,8 @@ export function ComplaintFilters({
 
         {/* Line Man */}
         <Select
-          value={currentFilters.assignedTo ?? ''}
-          onValueChange={(v) => handleFilterChange('assignedTo', v)}
+          value={currentFilters.assignedTo || 'all'}
+          onValueChange={(v) => handleFilterChange('assignedTo', v === 'all' ? '' : v)}
         >
           <SelectTrigger>
             <SelectValue placeholder="All Line Men" />

@@ -2,10 +2,11 @@
 
 import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
-import { FileSpreadsheet, FileText, BarChart3, Loader2 } from 'lucide-react'
+import { FileSpreadsheet, FileText, BarChart3, Loader2, TableIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import {
   Select,
   SelectContent,
@@ -17,6 +18,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import type { ReportData, ReportFilters } from '../queries/report.queries'
+import { ReportCharts } from './report-charts'
 // NOTE: generateReport is called via /api/reports/generate (fetch) instead of
 // a Server Action import. This avoids the 'use server' → next/headers chain
 // being bundled into the client component in Next.js 16.
@@ -371,39 +373,65 @@ export function ReportBuilder({
         </CardContent>
       </Card>
 
-      {/* Results */}
-      {reportData && <ReportResults data={reportData} />}
+      {/* Results — tabbed: Charts view + Table view */}
+      {reportData && (
+        <div className="space-y-4">
+          {/* Summary stat cards */}
+          <ReportSummaryCards data={reportData} />
+
+          {/* Tabs */}
+          <Tabs defaultValue="charts">
+            <TabsList className="grid grid-cols-2 w-[280px]">
+              <TabsTrigger value="charts" className="gap-1.5">
+                <BarChart3 className="h-4 w-4" /> Charts &amp; Graphs
+              </TabsTrigger>
+              <TabsTrigger value="table" className="gap-1.5">
+                <TableIcon className="h-4 w-4" /> Table View
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="charts" className="mt-4">
+              <ReportCharts data={reportData} />
+            </TabsContent>
+
+            <TabsContent value="table" className="mt-4">
+              <ReportResults data={reportData} />
+            </TabsContent>
+          </Tabs>
+        </div>
+      )}
+    </div>
+  )
+}
+
+const SUMMARY_CONFIG = [
+  { key: 'total', label: 'Total', color: 'bg-blue-900 text-white' },
+  { key: 'open', label: 'Open', color: 'bg-blue-100 text-blue-800' },
+  { key: 'assigned', label: 'Assigned', color: 'bg-yellow-100 text-yellow-800' },
+  { key: 'in_progress', label: 'In Progress', color: 'bg-orange-100 text-orange-800' },
+  { key: 'closed', label: 'Closed', color: 'bg-green-100 text-green-800' },
+  { key: 'rejected', label: 'Rejected', color: 'bg-red-100 text-red-800' },
+  { key: 'sla_breached', label: 'SLA Breached', color: 'bg-purple-100 text-purple-800' },
+] as const
+
+function ReportSummaryCards({ data }: { data: ReportData }) {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+      {SUMMARY_CONFIG.map(({ key, label, color }) => (
+        <div key={key} className={`rounded-lg p-3 text-center ${color}`}>
+          <div className="text-2xl font-bold">
+            {data.summary[key as keyof typeof data.summary]}
+          </div>
+          <div className="text-xs mt-1">{label}</div>
+        </div>
+      ))}
     </div>
   )
 }
 
 function ReportResults({ data }: { data: ReportData }) {
-  const STATUS_CONFIG = [
-    { key: 'total', label: 'Total', color: 'bg-blue-900 text-white' },
-    { key: 'open', label: 'Open', color: 'bg-blue-100 text-blue-800' },
-    { key: 'assigned', label: 'Assigned', color: 'bg-yellow-100 text-yellow-800' },
-    { key: 'in_progress', label: 'In Progress', color: 'bg-orange-100 text-orange-800' },
-    { key: 'closed', label: 'Closed', color: 'bg-green-100 text-green-800' },
-    { key: 'rejected', label: 'Rejected', color: 'bg-red-100 text-red-800' },
-    { key: 'sla_breached', label: 'SLA Breached', color: 'bg-purple-100 text-purple-800' },
-  ] as const
-
   return (
     <div className="space-y-4">
-      {/* Summary cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-        {STATUS_CONFIG.map(({ key, label, color }) => (
-          <div
-            key={key}
-            className={`rounded-lg p-3 text-center ${color}`}
-          >
-            <div className="text-2xl font-bold">
-              {data.summary[key as keyof typeof data.summary]}
-            </div>
-            <div className="text-xs mt-1">{label}</div>
-          </div>
-        ))}
-      </div>
 
       {/* Preview table */}
       <Card>
