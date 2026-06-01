@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { FileSpreadsheet, FileText, BarChart3, Loader2 } from 'lucide-react'
 
@@ -18,7 +17,9 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import type { ReportData, ReportFilters } from '../queries/report.queries'
-import { generateReport } from '../queries/report.queries'
+// NOTE: generateReport is called via /api/reports/generate (fetch) instead of
+// a Server Action import. This avoids the 'use server' → next/headers chain
+// being bundled into the client component in Next.js 16.
 
 interface Office {
   id: string
@@ -38,6 +39,7 @@ interface ReportBuilderProps {
   divisions: Office[]
   subDivisions: Office[]
   lineMen: LinMan[]
+  orgId: string
 }
 
 const REPORT_TYPES = [
@@ -95,6 +97,7 @@ export function ReportBuilder({
   divisions,
   subDivisions,
   lineMen,
+  orgId,
 }: ReportBuilderProps) {
   const [reportType, setReportType] =
     useState<ReportFilters['reportType']>('monthly')
@@ -151,7 +154,18 @@ export function ReportBuilder({
           status: status ? (status as any) : undefined,
           assignedTo: assignedTo || undefined,
         }
-        const data = await generateReport(filters)
+        // Call Route Handler instead of Server Action to avoid
+        // 'use server' → next/headers bundling issue in Next.js 16
+        const res = await fetch('/api/reports/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filters }),
+        })
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ error: 'Request failed' }))
+          throw new Error(err.error ?? `HTTP ${res.status}`)
+        }
+        const data: ReportData = await res.json()
         setReportData(data)
         toast.success(`Report generated — ${data.summary.total} complaints`)
       } catch (e: any) {

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SUNR Circle — New Laptop Setup Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 32px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  /* Cover banner */
+  .cover {
+    background: linear-gradient(135deg, #1a3d7c 0%, #2a5db8 100%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    page-break-inside: avoid;
+  }
+  .cover-logo { font-size: 36px; margin-bottom: 8px; }
+  .cover h1 { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+  .cover p  { font-size: 14px; opacity: 0.85; margin-bottom: 2px; }
+  .cover .sub { font-size: 12px; opacity: 0.7; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; }
+
+  /* Sections */
+  h2 {
+    font-size: 17px; font-weight: 700;
+    color: #1a3d7c;
+    border-left: 4px solid #1a3d7c;
+    padding: 6px 0 6px 12px;
+    margin: 24px 0 14px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 14px; font-weight: 600;
+    color: #122a57;
+    margin: 16px 0 8px;
+    page-break-after: avoid;
+  }
+  p { margin-bottom: 8px; }
+
+  /* Steps */
+  .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    page-break-inside: avoid;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #1a3d7c; color: #fff;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 4px; }
+
+  /* Code blocks */
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    background: #f0f4ff;
+    color: #1a3d7c;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  pre {
+    background: #1a2035;
+    color: #e2e8f0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin: 8px 0 14px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    line-height: 1.8;
+    border-left: 3px solid #1a3d7c;
+  }
+  pre .comment { color: #64748b; }
+  pre .key     { color: #93c5fd; }
+
+  /* Tables */
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 10px 0 16px;
+    font-size: 12.5px;
+    page-break-inside: avoid;
+  }
+  th {
+    background: #1a3d7c; color: #fff;
+    padding: 8px 12px; text-align: left; font-weight: 600;
+  }
+  td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; }
+  tr:nth-child(even) td { background: #f8faff; }
+  tr:last-child td { border-bottom: none; }
+
+  /* Alert boxes */
+  .info-box {
+    background: #f0f4ff; border: 1px solid #c7d8ff;
+    border-left: 4px solid #1a3d7c;
+    border-radius: 6px; padding: 12px 14px;
+    margin: 12px 0; page-break-inside: avoid;
+    font-size: 12.5px;
+  }
+  .success-box {
+    background: #dcfce7; border-left: 4px solid #16a34a;
+    border-radius: 6px; padding: 12px 14px; margin: 12px 0;
+    font-size: 12.5px; page-break-inside: avoid;
+  }
+  .warning-box {
+    background: #fef3c7; border-left: 4px solid #d97706;
+    border-radius: 6px; padding: 12px 14px; margin: 12px 0;
+    font-size: 12.5px; page-break-inside: avoid;
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 8px 0 14px; }
+  .checklist li {
+    padding: 5px 0 5px 28px;
+    position: relative;
+    border-bottom: 1px solid #f0f4ff;
+    font-size: 12.5px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '☐';
+    position: absolute; left: 6px;
+    color: #1a3d7c; font-size: 14px;
+  }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+  /* Page breaks */
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+
+  /* Footer */
+  .footer {
+    margin-top: 32px; padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11px; color: #6b7280;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 20px 28px; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .step-num { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    pre { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-logo">⚡</div>
+  <h1>SUNR Circle — New Laptop Setup Guide</h1>
+  <p>Complaint Management System · Complete Developer Setup</p>
+  <p>Flutter Mobile + Next.js Admin Panel + Supabase Backend</p>
+  <div class="sub">
+    GitHub: https://github.com/ritesh-vyas-bacancy/sunr-circle &nbsp;·&nbsp;
+    Admin Panel: https://admin-pi-blue.vercel.app &nbsp;·&nbsp;
+    Version 1.0.0
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<h2>📋 Overview</h2>
+<p>This guide walks you through setting up the SUNR Circle project on a new Windows laptop with Android Studio. After completing all steps, you will be able to run the Flutter mobile app on an Android emulator or physical device, and the Next.js admin panel locally.</p>
+
+<table>
+  <tr><th>Component</th><th>Technology</th><th>Purpose</th></tr>
+  <tr><td>Mobile App</td><td>Flutter 3.x + Riverpod</td><td>Call Centre, Line Man, Top Management</td></tr>
+  <tr><td>Admin Panel</td><td>Next.js 16 + TypeScript</td><td>Back Office management & reports</td></tr>
+  <tr><td>Backend</td><td>Supabase (PostgreSQL)</td><td>Auth, database, storage, Edge Functions</td></tr>
+</table>
+
+<!-- PREREQUISITES -->
+<h2>🛠️ Step 1 — Install Prerequisites</h2>
+
+<p>Install the following tools on the new laptop. The order matters.</p>
+
+<table>
+  <tr><th>#</th><th>Tool</th><th>Version</th><th>Download URL</th><th>Note</th></tr>
+  <tr><td>1</td><td><strong>Git</strong></td><td>Latest</td><td>git-scm.com/download/win</td><td>Required first</td></tr>
+  <tr><td>2</td><td><strong>Node.js</strong></td><td>20 LTS+</td><td>nodejs.org</td><td>Includes npm</td></tr>
+  <tr><td>3</td><td><strong>Flutter SDK</strong></td><td>3.19+</td><td>docs.flutter.dev/get-started/install/windows</td><td>See below</td></tr>
+  <tr><td>4</td><td><strong>Android Studio</strong></td><td>Latest</td><td>✅ Already installed</td><td>Run flutter doctor to link</td></tr>
+</table>
+
+<div class="no-break">
+<h3>Flutter SDK Installation</h3>
+<p>1. Download the Flutter zip from: <code>docs.flutter.dev/get-started/install/windows</code></p>
+<p>2. Extract to <code>C:\flutter</code> (do NOT put in Program Files)</p>
+<p>3. Add Flutter to PATH:</p>
+<pre>
+<span class="comment"># Run in PowerShell as Administrator</span>
+[System.Environment]::SetEnvironmentVariable(
+  "PATH",
+  $env:PATH + ";C:\flutter\bin",
+  "Machine"
+)
+</pre>
+<p>4. Restart PowerShell/Terminal after adding to PATH</p>
+</div>
+
+<!-- CLONE -->
+<h2>📥 Step 2 — Clone the Repository</h2>
+
+<pre>
+<span class="comment"># Open terminal and run:</span>
+git clone https://github.com/ritesh-vyas-bacancy/sunr-circle.git
+cd sunr-circle
+</pre>
+
+<p>The project structure after cloning:</p>
+<pre>
+sunr-circle/
+├── apps/
+│   ├── admin/          <span class="comment"># Next.js 16 Admin Panel</span>
+│   ├── mobile/         <span class="comment"># Flutter Mobile App</span>
+│   └── mobile-web/     <span class="comment"># Vite web demo</span>
+├── supabase/           <span class="comment"># SQL migrations, Edge Functions</span>
+├── docs/               <span class="comment"># Documentation</span>
+└── scripts/            <span class="comment"># Utility scripts</span>
+</pre>
+
+<!-- ADMIN PANEL -->
+<div class="page-break"></div>
+<h2>💻 Step 3 — Admin Panel Setup</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <strong>Install dependencies</strong>
+    <pre>cd apps/admin
+npm install</pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <strong>Create environment file</strong>
+    <pre>copy .env.example .env.local</pre>
+    <p>Open <code>.env.local</code> in a text editor and fill in the values below:</p>
+  </div>
+</div>
+
+<div class="no-break">
+<pre>
+<span class="comment"># apps/admin/.env.local — copy these exact values</span>
+
+<span class="key">NEXT_PUBLIC_SUPABASE_URL</span>=https://oaftuyikaxgzlyyzgenk.supabase.co
+
+<span class="key">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hZnR1eWlrYXhnemx5eXpnZW5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMjI5NDYsImV4cCI6MjA5NTc5ODk0Nn0.lMF1h_MEyW78aVpmA7lnXoiXT-AmpsFX1QAzgAyWr-0
+
+<span class="key">SUPABASE_SERVICE_ROLE_KEY</span>=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hZnR1eWlrYXhnemx5eXpnZW5rIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MDIyMjk0NiwiZXhwIjoyMDk1Nzk4OTQ2fQ.kuPhvz2qKv5v4wKEV1NV4l-nqsGCakAVS8FyKzNJnDE
+
+<span class="key">AUTH_SECRET</span>=sunr-circle-auth-secret-key-2024-production-ready
+
+<span class="key">AUTH_URL</span>=http://localhost:3000
+
+<span class="key">NEXT_PUBLIC_APP_NAME</span>=SUNR Circle Admin
+<span class="key">NEXT_PUBLIC_ENVIRONMENT</span>=development
+<span class="key">NEXT_PUBLIC_ORG_ASSETS_BUCKET</span>=org-assets
+<span class="key">NEXT_PUBLIC_COMPLAINT_ATTACHMENTS_BUCKET</span>=complaint-attachments
+</pre>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <strong>Run the admin panel</strong>
+    <pre>npm run dev</pre>
+    <p>Open browser at: <code>http://localhost:3000</code></p>
+  </div>
+</div>
+
+<!-- FLUTTER SETUP -->
+<div class="page-break"></div>
+<h2>📱 Step 4 — Flutter Mobile App Setup</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <strong>Verify Flutter installation</strong>
+    <pre>flutter doctor</pre>
+    <p>Expected output (all green ticks):</p>
+    <pre>
+[✓] Flutter (Channel stable)
+[✓] Windows Version
+[✓] Android toolchain
+[✓] Android Studio
+[✓] Connected device</pre>
+    <p>Fix any issues shown by <code>flutter doctor</code> before continuing.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <strong>Create environment file</strong>
+    <pre>cd apps/mobile
+copy .env.example .env</pre>
+    <p>Open <code>.env</code> and fill in:</p>
+  </div>
+</div>
+
+<pre>
+<span class="comment"># apps/mobile/.env — copy these exact values</span>
+
+<span class="key">SUPABASE_URL</span>=https://oaftuyikaxgzlyyzgenk.supabase.co
+
+<span class="key">SUPABASE_ANON_KEY</span>=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hZnR1eWlrYXhnemx5eXpnZW5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMjI5NDYsImV4cCI6MjA5NTc5ODk0Nn0.lMF1h_MEyW78aVpmA7lnXoiXT-AmpsFX1QAzgAyWr-0
+
+<span class="key">ENVIRONMENT</span>=development
+<span class="key">APP_VERSION</span>=1.0.0
+<span class="key">SUPPORT_EMAIL</span>=support@sunrcircle.in
+</pre>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <strong>Get Flutter dependencies</strong>
+    <pre>flutter pub get</pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <strong>Start Android emulator</strong>
+    <p>Open Android Studio → Device Manager → Start an emulator (or connect a physical Android phone via USB)</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <strong>Run the Flutter app</strong>
+    <pre>flutter run --dart-define-from-file=.env</pre>
+    <p>The app will install and launch on your emulator/device automatically.</p>
+  </div>
+</div>
+
+<div class="warning-box">
+  ⚠️ <strong>Syncfusion Charts Note:</strong> The Statistics screen uses Syncfusion charts which require a free community license key. Register at <code>syncfusion.com/products/communitylicense</code> and add the key in <code>lib/main.dart</code> before <code>WidgetsFlutterBinding.ensureInitialized()</code>:<br><br>
+  <code>SyncfusionLicense.registerLicense('YOUR_LICENSE_KEY_HERE');</code>
+</div>
+
+<!-- LOGIN CREDENTIALS -->
+<h2>🔑 Step 5 — Test Login Credentials</h2>
+
+<table>
+  <tr><th>Role</th><th>Email</th><th>Password</th><th>App</th></tr>
+  <tr><td><strong>Back Office</strong></td><td>admin@sunrcircle.in</td><td>Admin@Sunr2024</td><td>Admin Panel</td></tr>
+  <tr><td><strong>Top Management</strong></td><td>manager@sunrcircle.in</td><td>Manager@Sunr2024</td><td>Both</td></tr>
+  <tr><td><strong>Call Centre</strong></td><td>callcentre@sunrcircle.in</td><td>CallCentre@Sunr2024</td><td>Mobile App</td></tr>
+  <tr><td><strong>Line Man</strong></td><td>lineman@sunrcircle.in</td><td>LineMen@Sunr2024</td><td>Mobile App</td></tr>
+</table>
+
+<!-- QUICK REFERENCE -->
+<div class="page-break"></div>
+<h2>🔗 Quick Reference Links</h2>
+
+<table>
+  <tr><th>Resource</th><th>URL / Value</th></tr>
+  <tr><td><strong>GitHub Repository</strong></td><td>https://github.com/ritesh-vyas-bacancy/sunr-circle</td></tr>
+  <tr><td><strong>Admin Panel (Live)</strong></td><td>https://admin-pi-blue.vercel.app</td></tr>
+  <tr><td><strong>Mobile Web (Live)</strong></td><td>https://mobile-8r6vot225-riteshs-projects-06cfcd76.vercel.app</td></tr>
+  <tr><td><strong>Supabase Dashboard</strong></td><td>https://supabase.com/dashboard/project/oaftuyikaxgzlyyzgenk</td></tr>
+  <tr><td><strong>Vercel Dashboard</strong></td><td>https://vercel.com/riteshs-projects-06cfcd76/admin</td></tr>
+</table>
+
+<!-- BUILD COMMANDS -->
+<h2>🏗️ Build Commands Reference</h2>
+
+<h3>Admin Panel</h3>
+<pre>
+npm run dev          <span class="comment"># Development server at localhost:3000</span>
+npm run build        <span class="comment"># Production build</span>
+npm run type-check   <span class="comment"># TypeScript check</span>
+npm run lint         <span class="comment"># ESLint check</span>
+</pre>
+
+<h3>Flutter Mobile</h3>
+<pre>
+flutter run --dart-define-from-file=.env                     <span class="comment"># Run on device/emulator</span>
+flutter build apk --release --dart-define-from-file=.env     <span class="comment"># Debug APK</span>
+flutter analyze                                               <span class="comment"># Static analysis</span>
+flutter test                                                  <span class="comment"># Run tests</span>
+</pre>
+
+<h3>Git Workflow</h3>
+<pre>
+git pull origin main                      <span class="comment"># Get latest code</span>
+git checkout -b feature/your-feature      <span class="comment"># Create feature branch</span>
+git add . &amp;&amp; git commit -m "feat: ..."   <span class="comment"># Commit changes</span>
+git push origin feature/your-feature      <span class="comment"># Push to GitHub</span>
+</pre>
+
+<!-- SETUP CHECKLIST -->
+<h2>✅ Setup Verification Checklist</h2>
+
+<ul class="checklist">
+  <li>Git installed and <code>git --version</code> works</li>
+  <li>Node.js 20+ installed and <code>node --version</code> works</li>
+  <li>Flutter SDK installed at <code>C:\flutter</code></li>
+  <li>Flutter added to system PATH</li>
+  <li><code>flutter doctor</code> shows all green (no red ✗)</li>
+  <li>Android Studio linked to Flutter (shown in flutter doctor)</li>
+  <li>Repository cloned from GitHub</li>
+  <li><code>apps/admin/.env.local</code> created with correct values</li>
+  <li><code>apps/mobile/.env</code> created with correct values</li>
+  <li>Admin panel runs at <code>http://localhost:3000</code></li>
+  <li>Admin panel login works with admin@sunrcircle.in</li>
+  <li>Flutter app runs on emulator or physical device</li>
+  <li>Flutter login works with callcentre@sunrcircle.in</li>
+</ul>
+
+<!-- TROUBLESHOOTING -->
+<h2>🔧 Common Issues &amp; Solutions</h2>
+
+<div class="no-break">
+<h3>Flutter — "flutter" is not recognized</h3>
+<p>Flutter is not in PATH. Run in PowerShell as Administrator:</p>
+<pre>
+[System.Environment]::SetEnvironmentVariable(
+  "PATH", $env:PATH + ";C:\flutter\bin", "Machine"
+)
+</pre>
+<p>Then restart the terminal completely.</p>
+</div>
+
+<div class="no-break">
+<h3>Admin Panel — "This page couldn't load"</h3>
+<p>This is usually an environment variable issue. Verify your <code>.env.local</code> file has all the required values from Step 3. Restart the dev server after editing.</p>
+</div>
+
+<div class="no-break">
+<h3>Flutter — No connected devices</h3>
+<p>1. Open Android Studio → Device Manager → Start an AVD emulator, OR<br>
+2. Connect an Android phone via USB → Enable USB Debugging in Developer Options, OR<br>
+3. Run <code>flutter devices</code> to list available devices</p>
+</div>
+
+<div class="no-break">
+<h3>Admin Panel — Next.js build error</h3>
+<pre>
+cd apps/admin
+npm install       <span class="comment"># Reinstall dependencies</span>
+npm run build     <span class="comment"># Test production build</span>
+</pre>
+</div>
+
+<div class="success-box">
+  ✅ <strong>Need Help?</strong> All source code is in GitHub. The live admin panel at <strong>https://admin-pi-blue.vercel.app</strong> connects to the same Supabase database, so you can always verify data through the web even if local setup has issues.
+</div>
+
+<hr />
+
+<div class="footer">
+  SUNR Circle Complaint Management System · Version 1.0.0 ·
+  Generated for Bacancy Technology ·
+  GitHub: https://github.com/ritesh-vyas-bacancy/sunr-circle
+</div>
+
+</body>
+</html>

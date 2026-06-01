@@ -1,7 +1,8 @@
 'use server'
 import { createAdminClient } from '@/lib/supabase/server'
-import { requireSession } from '@/lib/auth/session'
 import type { ComplaintStatus } from '@/types'
+// NOTE: requireSession removed — orgId is passed as parameter to avoid
+// nested auth() calls from Server Actions in Next.js 16.
 
 export interface ReportFilters {
   reportType: 'daily' | 'weekly' | 'monthly' | 'six_monthly' | 'yearly' | 'custom'
@@ -91,20 +92,19 @@ async function resolveSubDivisionIds(
   return (subDivisions ?? []).map((s: { id: string }) => s.id)
 }
 
-export async function generateReport(filters: ReportFilters): Promise<ReportData> {
-  const session = await requireSession()
+export async function generateReport(orgId: string, filters: ReportFilters): Promise<ReportData> {
   const supabase = createAdminClient()
 
   // Fetch org name
   const { data: org } = await supabase
     .from('organizations')
     .select('name')
-    .eq('id', session.user.organizationId)
+    .eq('id', orgId)
     .single()
 
   const resolvedSubDivisionIds = await resolveSubDivisionIds(
     supabase,
-    session.user.organizationId,
+    orgId,
     filters.circleId,
     filters.divisionId,
   )
@@ -137,7 +137,7 @@ export async function generateReport(filters: ReportFilters): Promise<ReportData
       created_by_user:created_by(full_name),
       assigned_to_user:assigned_to(full_name)
     `)
-    .eq('organization_id', session.user.organizationId)
+    .eq('organization_id', orgId)
     .gte('created_at', filters.dateFrom + 'T00:00:00.000Z')
     .lte('created_at', filters.dateTo + 'T23:59:59.999Z')
     .order('created_at', { ascending: false })
