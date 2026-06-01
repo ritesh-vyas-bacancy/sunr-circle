@@ -12,7 +12,13 @@ export default auth(function middleware(req) {
     nextUrl.pathname.startsWith('/forgot-password')
   const isApiRoute = nextUrl.pathname.startsWith('/api/')
   const isPublicAsset =
-    nextUrl.pathname.startsWith('/_next') || nextUrl.pathname === '/favicon.ico'
+    nextUrl.pathname.startsWith('/_next') ||
+    nextUrl.pathname === '/favicon.ico' ||
+    nextUrl.pathname.endsWith('.pdf') ||
+    nextUrl.pathname.endsWith('.png') ||
+    nextUrl.pathname.endsWith('.jpg') ||
+    nextUrl.pathname.endsWith('.svg') ||
+    nextUrl.pathname.endsWith('.ico')
 
   if (isPublicAsset || isApiRoute) return NextResponse.next()
 
